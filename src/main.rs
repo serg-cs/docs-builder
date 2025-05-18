@@ -30,7 +30,7 @@ fn main() {
              data_directory_path.canonicalize().unwrap().display(), deposit_html_path.canonicalize().unwrap().display());
     
     let markdown_files = get_markdown_files_in_data(data_directory_path);
-    generate_html_templates(markdown_files, deposit_html_path);
+    generate_html_templates(deposit_html_path, markdown_files);
 }
 
 fn get_markdown_files_in_data(directory: &Path) -> Vec<PathBuf> {
@@ -45,19 +45,22 @@ fn get_markdown_files_in_data(directory: &Path) -> Vec<PathBuf> {
     markdown_files
 }
 
-fn generate_html_templates(markdown_files: Vec<PathBuf>, deposit_html_path: &Path) {
+fn generate_html_templates(deposit_html_path: &Path, markdown_files: Vec<PathBuf>) {
     create_dir_all(deposit_html_path).expect("Error creating HTML deposit directory");
 
     for markdown_file_path in markdown_files {
+        // Create file name in the HTML deposit directory with .html extension
         let mut file_name = markdown_file_path.clone();
         file_name.set_extension("html");
 
         let html_file_path = deposit_html_path.join(file_name.file_name().unwrap());
         let mut page = File::create(html_file_path).unwrap();
 
+        // Read Markdown file
         let mut markdown= String::new();
         File::open(markdown_file_path).unwrap().read_to_string(&mut markdown).expect("Failed to read markdown file");
 
+        // Write HTML from Markdown in the new HTML file created
         let html = markdown::to_html(markdown.as_str());
         page.write_all(html.as_bytes()).expect("Failed to write HTML file");
     }
