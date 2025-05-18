@@ -71,7 +71,7 @@ fn generate_html_templates(deposit_html_path: &Path, markdown_files: Vec<PathBuf
         page.write_all(html.as_bytes()).expect("Failed to write HTML file");
 
         navbar.add_child(HtmlElement::new(HtmlTag::Div)
-            .with_link(html_file_path.parent().unwrap().parent().unwrap().join(html_file_path.file_name().unwrap()).to_str().unwrap(), html_file_path.file_name().unwrap().to_str().unwrap()).into());
+            .with_link(html_file_path.file_name().unwrap().to_str().unwrap(), html_file_path.file_name().unwrap().to_str().unwrap()).into());
     }
 
     // Create HTML for index
