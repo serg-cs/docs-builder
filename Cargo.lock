@@ -3,9 +3,16 @@
 version = 4
 
 [[package]]
+name = "build_html"
+version = "2.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "01b01f54cbdd56298a506b086691594ded3b68dcbc9437adc87c616a35e7fc89"
+
+[[package]]
 name = "docs-builder"
 version = "0.1.0"
 dependencies = [
+ "build_html",
  "markdown",
 ]
 
